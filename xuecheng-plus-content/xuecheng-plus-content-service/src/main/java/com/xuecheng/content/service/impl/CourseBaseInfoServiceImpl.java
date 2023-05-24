@@ -5,16 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xuecheng.base.exception.XueChengPlusException;
 import com.xuecheng.base.model.PageParams;
 import com.xuecheng.base.model.PageResult;
-import com.xuecheng.content.mapper.CourseBaseMapper;
-import com.xuecheng.content.mapper.CourseCategoryMapper;
-import com.xuecheng.content.mapper.CourseMarketMapper;
+import com.xuecheng.content.mapper.*;
 import com.xuecheng.content.model.dto.AddCourseDto;
 import com.xuecheng.content.model.dto.CourseBaseInfoDto;
 import com.xuecheng.content.model.dto.EditCourseDto;
 import com.xuecheng.content.model.dto.QueryCourseParamsDto;
-import com.xuecheng.content.model.po.CourseBase;
-import com.xuecheng.content.model.po.CourseCategory;
-import com.xuecheng.content.model.po.CourseMarket;
+import com.xuecheng.content.model.po.*;
 import com.xuecheng.content.service.CourseBaseInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +36,15 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
 
     @Autowired
     CourseMarketMapper courseMarketMapper;
+
+    @Autowired
+    CourseTeacherMapper courseTeacherMapper;
+
+    @Autowired
+    TeachplanMapper teachplanMapper;
+
+    @Autowired
+    TeachplanMediaMapper teachplanMediaMapper;
 
     @Autowired
     CourseCategoryMapper courseCategoryMapper;
@@ -134,8 +139,9 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         }
         //查询课程基本信息及营销信息并返回
         return getCourseBaseInfo(courseId);
-
     }
+
+
     //保存课程营销信息
     private int saveCourseMarket(CourseMarket courseMarketNew){
         //收费规则
@@ -219,5 +225,41 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         //查询课程信息
         return this.getCourseBaseInfo(courseId);
 
+    }
+
+    @Transactional
+    @Override
+    public void deleteCourseInfo(Long courseId) {
+        deleteCourseBaseByCourseId(courseId);
+        deleteCourseMarketByCourseId(courseId);
+        deleteCourseTeacherByCourseId(courseId);
+        deleteCourseTeachPlanByCourseId(courseId);
+        deleteCourseTeachPlanMediaByCourseId(courseId);
+    }
+
+    private void deleteCourseBaseByCourseId(Long courseId) {
+        courseBaseMapper.deleteById(courseId);
+    }
+
+    private void deleteCourseMarketByCourseId(Long courseId) {
+        courseMarketMapper.deleteById(courseId);
+    }
+
+    private void deleteCourseTeacherByCourseId(Long courseId) {
+        LambdaQueryWrapper<CourseTeacher> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CourseTeacher::getCourseId,courseId);
+        courseTeacherMapper.delete(queryWrapper);
+    }
+
+    private void deleteCourseTeachPlanByCourseId(Long courseId) {
+        LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Teachplan::getCourseId,courseId);
+        teachplanMapper.delete(queryWrapper);
+    }
+
+    private void deleteCourseTeachPlanMediaByCourseId(Long courseId) {
+        LambdaQueryWrapper<TeachplanMedia> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(TeachplanMedia::getCourseId,courseId);
+        teachplanMediaMapper.delete(queryWrapper);
     }
 }

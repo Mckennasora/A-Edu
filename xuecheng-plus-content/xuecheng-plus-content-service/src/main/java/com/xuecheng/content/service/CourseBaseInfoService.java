@@ -53,4 +53,6 @@ public interface CourseBaseInfoService {
      * @date 2022/9/7 17:51
      */
     CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto editCourseDto);
+
+    void deleteCourseInfo(Long courseId);
 }

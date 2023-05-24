@@ -1,9 +1,7 @@
 package com.xuecheng.content.service;
 
-import com.xuecheng.base.model.PageParams;
-import com.xuecheng.base.model.PageResult;
-import com.xuecheng.content.model.dto.*;
-import com.xuecheng.content.model.po.CourseBase;
+import com.xuecheng.content.model.dto.SaveTeachplanDto;
+import com.xuecheng.content.model.dto.TeachplanDto;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public interface TeachplanService {
      * @author Mr.M
      * @date 2022/9/9 11:13
      */
-    public List<TeachplanDto> findTeachplanTree(long courseId);
+    List<TeachplanDto> findTeachplanTree(long courseId);
 
     /**
      * @description 只在课程计划
@@ -31,6 +29,18 @@ public interface TeachplanService {
      * @author Mr.M
      * @date 2022/9/9 13:39
      */
-    public void saveTeachplan(SaveTeachplanDto teachplanDto);
+    void saveTeachplan(SaveTeachplanDto teachplanDto);
+
+    /**
+     * 删除teacheplan
+     * 删除第一级别的大章节时要求大章节下边没有小章节时方可删除。
+     * 删除第二级别的小章节的同时需要将teachplan_media表关联的信息也删除。
+     * @param teachplanId teachplanId
+     */
+    void deleteTeachplan(Long teachplanId);
+
+    void movedownTeachplan(Long teachplanId);
+
+    void moveupTeachplan(Long teachplanId);
 
 }

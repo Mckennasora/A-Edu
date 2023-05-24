@@ -14,10 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Mr.M
  * @version 1.0
@@ -46,6 +42,13 @@ public class CourseBaseInfoController {
         //机构id，由于认证系统没有上线暂时硬编码
         Long companyId = 1232141425L;
         return courseBaseInfoService.createCourseBase(companyId, addCourseDto);
+    }
+
+    @ApiOperation("删除课程基础信息")
+    @DeleteMapping("/course/{courseId}")
+    public void createCourseBase(@PathVariable Long courseId) {
+        //机构id，由于认证系统没有上线暂时硬编码
+        courseBaseInfoService.deleteCourseInfo(courseId);
     }
 
     @ApiOperation("根据课程id查询课程基础信息")
