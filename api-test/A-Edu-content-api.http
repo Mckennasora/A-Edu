@@ -38,9 +38,8 @@ Content-Type: application/json
 }
 
 ### 根据id查询
-GET {{content_host}}/content/course/40
+GET {{gateway_host}}/content/course/118
 Content-Type: application/json
-
 
 ### 修改课程
 PUT {{content_host}}/content/course/40
@@ -61,4 +60,14 @@ Content-Type: application/json
   "introduction": "教师简介",
   "photograph": null,
   "createDate": null
+}
+
+###媒资信息
+POST {{media_host}}/media/files?pageNo=1&1pageSize=2
+Content-Type: application/json
+
+{
+  "auditStatus": "",
+  "fileType": "",
+  "filename": ""
 }

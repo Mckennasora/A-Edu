@@ -20,8 +20,6 @@ class CourseBaseCategoryServiceTests {
 
     @Test
     void testCourseBaseMapper() {
-
-
         List<CourseCategoryTreeDto> list = courseCategoryService.queryTreeNodes("1");
         System.out.println(list);
 

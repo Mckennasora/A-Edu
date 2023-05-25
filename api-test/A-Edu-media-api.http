@@ -1,0 +1,19 @@
+###媒资信息
+POST {{media_host}}/media/files?pageNo=1&1pageSize=2
+Content-Type: application/json
+
+{
+  "auditStatus": "",
+  "fileType": "",
+  "filename": ""
+}
+
+### 上传文件
+POST {{media_host}}/media/upload/coursefile
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="filedata"; filename="test1.png"
+Content-Type: application/octet-stream
+
+< D:\yyhfile\pixiv\105555525Nature.png
